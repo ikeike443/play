@@ -16,6 +16,9 @@ public class CheatSheetHelper {
         String docLangDir = (docLang != null && (!"en".equalsIgnoreCase(docLang) && !docLang.matches("en-.*"))) ? "_" + docLang : "";
         File cheatSheetDir = new File(cheatSheetBaseDir + docLangDir, category);
 
+        if (!cheatSheetDir.exists()){
+            cheatSheetDir = new File(cheatSheetBaseDir, category);
+        }
         if (cheatSheetDir.exists() && cheatSheetDir.isDirectory()) {
             File[] sheetFiles = cheatSheetDir.listFiles(new FileFilter() {
 
@@ -74,6 +77,14 @@ public class CheatSheetHelper {
                 return pathname.isDirectory();
             }
         });
+
+        if(categories==null || categories.length<=0){
+            categories = cheatSheetBaseDir.listFiles(new FileFilter() {
+                public boolean accept(File pathname) {
+                    return pathname.isDirectory();
+                }
+            });
+        }
 
         Arrays.sort(categories);
 

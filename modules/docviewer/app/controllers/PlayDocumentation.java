@@ -29,9 +29,16 @@ public class PlayDocumentation extends Controller {
         String docLangDir = (docLang != null && (!"en".equalsIgnoreCase(docLang) && !docLang.matches("en-.*") ) ) ? "_" + docLang + "/" : "/";//TODO refactor
 
         File page = new File(Play.frameworkPath, "documentation/manual" + docLangDir + id + ".textile");
-        if (module != null) {
-            page = new File(Play.modules.get(module).getRealFile(), "documentation/manual" + docLangDir + id + ".textile");
+        if(!page.exists()){
+            page = new File(Play.frameworkPath, "documentation/manual/" + id + ".textile");
         }
+
+        if (module != null) {
+        }
+        if(!page.exists()){
+            page = new File(Play.modules.get(module).getRealFile(), "documentation/manual/" + id + ".textile");
+        }
+
         if (!page.exists()) {
             notFound("Manual page for " + id + " not found");
         }
